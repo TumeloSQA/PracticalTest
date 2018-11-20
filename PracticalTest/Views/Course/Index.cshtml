@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Course";
+}
+
+<div class="page-header">
+    <h4>
+        New Course:
+    </h4>
+</div>
+
+<form asp-controller="Course" asp-action="SaveCourse" method="post">
+    <div class="panel-body">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="CourseName">Course Name:</label>
+                <input name="CourseName" id="CourseName" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="StartDate">Start Date:</label>
+                <input name="StartDate" id="StartDate" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="EndDate">End Date:</label>
+                <input name="EndDate" id="EndDate" type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <button id="submit" type="submit" class="btn">Save Course</button>
+    </div>
+</form>

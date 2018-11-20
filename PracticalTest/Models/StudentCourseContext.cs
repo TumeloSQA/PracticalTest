@@ -16,12 +16,10 @@ namespace PracticalTest.Models
         public DbSet<StudentModel> Student { get; set; }
         public DbSet<CourseModel> Course { get; set; }
         public DbSet<Student_CourseModel> Student_Course { get; set; }
+        public DbQuery<ViewDataModel> viewModelQuery { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<StudentModel>().ToTable("Student");
-            //modelBuilder.Entity<CourseModel>().ToTable("Course");
-            //modelBuilder.Entity<Student_CourseModel>().ToTable("Student_Course");
             modelBuilder.Entity<StudentModel>(entity =>
             {
                 entity.HasKey(e => e.StudentId);

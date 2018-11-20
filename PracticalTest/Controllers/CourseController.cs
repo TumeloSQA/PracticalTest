@@ -7,11 +7,11 @@ using PracticalTest.Models;
 
 namespace PracticalTest.Controllers
 {
-    public class StudentController : Controller
+    public class CourseController : Controller
     {
         private readonly StudentCourseContext _context;
 
-        public StudentController(StudentCourseContext context)
+        public CourseController(StudentCourseContext context)
         {
             _context = context;
         }
@@ -21,19 +21,18 @@ namespace PracticalTest.Controllers
             return View();
         }
 
-        public IActionResult SaveStudent()
+        public IActionResult SaveCourse()
         {
-            StudentModel smodel = new StudentModel
+            CourseModel cmodel = new CourseModel
             {
-                FirstName = HttpContext.Request.Form["Firstname"].ToString(),
-                Surname = HttpContext.Request.Form["Surname"].ToString(),
-                EmailAddress = HttpContext.Request.Form["EmailAddress"].ToString(),
-                IDNumber = HttpContext.Request.Form["IDNumber"].ToString()
+                CourseName = HttpContext.Request.Form["CourseName"].ToString(),
+                StartDate = DateTime.Parse(HttpContext.Request.Form["StartDate"].ToString()),
+                EndDate = DateTime.Parse(HttpContext.Request.Form["EndDate"].ToString())
             };
 
-            if (smodel.FirstName != null && smodel.Surname != null)
+            if(cmodel.CourseName != null && cmodel.StartDate < cmodel.EndDate)
             {
-                _context.Add(smodel);
+                _context.Add(cmodel);
                 _context.SaveChanges();
             }
             else

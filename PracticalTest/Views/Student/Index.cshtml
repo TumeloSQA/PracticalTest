@@ -1,43 +1,38 @@
-﻿@model IEnumerable<PracticalTest.Models.StudentModel>
-
+﻿
 @{
     ViewData["Title"] = "Students";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IDNumber)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmailAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IDNumber)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="page-header">
+    <h4>
+        New Student:
+    </h4>
+</div>
+<form asp-controller="Student" asp-action="SaveStudent" method="post">
+    <div class="panel-body">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="FirstName">First Name:</label>
+                <input name="FirstName" id="FirstName" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Surname">Surname:</label>
+                <input name="Surname" id="Surname" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="EmailAddress">Email Address:</label>
+                <input name="EmailAddress" id="EmailAddress" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="IDNumber">ID Number:</label>
+                <input name="IDNumber" id="IDNumber" type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <button id="submit" type="submit" class="btn">Save Student</button>
+    </div>
+</form>

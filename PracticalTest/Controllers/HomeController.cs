@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PracticalTest.Models;
 
 namespace PracticalTest.Controllers
@@ -11,7 +14,7 @@ namespace PracticalTest.Controllers
     public class HomeController : Controller
     {
         private readonly StudentCourseContext _context;
-
+        
         public HomeController(StudentCourseContext context)
         {
             _context = context;
@@ -19,18 +22,30 @@ namespace PracticalTest.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Student.ToList());
+
+            ViewModel myview = new ViewModel
+            {
+                Students = _context.Student.ToList(),
+                Courses = _context.Course.ToList(),
+                ViewData = _context.viewModelQuery.FromSql("GetStudentInfo").ToList(),
+                CourseId = 0,
+                StudentId = 0
+                
+            };
+
+            return View(myview);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult SaveStudentCourse()
         {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            //Student_CourseModel student_Course = new Student_CourseModel
+            //{
+            //    StudentId = viewM.StudentId,
+            //    CourseId = viewM.CourseId
+            //};
+            return View("Index");
         }
     }
 }
