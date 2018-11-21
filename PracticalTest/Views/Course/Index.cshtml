@@ -2,6 +2,17 @@
     ViewData["Title"] = "Course";
 }
 
+@if (ViewBag.Message != null)
+{
+    <form asp-controller="Course" asp-action="Alert">
+        <div class="alert alert-info" id="message" style="display:block">
+            Alert: @ViewBag.Message
+            <div class="bottom-left">
+                <button id="Ok" type="submit" class="btn btn-primary" onclick="closeMessage()">OK</button>
+            </div>
+        </div>
+    </form>
+}
 <div class="page-header">
     <h4>
         New Course:
@@ -32,3 +43,13 @@
         <button id="submit" type="submit" class="btn">Save Course</button>
     </div>
 </form>
+<script>
+    function closeMessage() {
+        var x = document.getElementById("message");
+        if (x.style.display === "none") {
+            x.style.visibility = "block";
+        } else {
+            x.style.visibility = "block";
+        }
+    }
+</script>

@@ -15,6 +15,50 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <style type="text/css">
+        .paging-nav {
+            text-align: right;
+            padding-top: 2px;
+        }
+
+            .paging-nav a {
+                margin: auto 1px;
+                text-decoration: none;
+                display: inline-block;
+                padding: 1px 7px;
+                background: #91b9e6;
+                color: white;
+                border-radius: 3px;
+            }
+
+            .paging-nav .selected-page {
+                background: #187ed5;
+                font-weight: bold;
+            }
+
+        .paging-nav, #tableData {
+            width: 400px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+
+        #tableData {
+            margin-top: 100px;
+            border-spacing: 0;
+            border: 1px dotted #ccc;
+        }
+
+            #tableData th {
+                background: #e5f0fb;
+                text-align: left;
+                border-bottom: 2px solid #91b9e6;
+            }
+
+            #tableData td {
+                padding: 3px 10px;
+                border-bottom: 1px dotted #ccd;
+            }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">

@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PracticalTest.ClientModules;
 using PracticalTest.Models;
 
 namespace PracticalTest.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly StudentCourseContext _context;
+        private readonly IAddStudent _student;
 
-        public StudentController(StudentCourseContext context)
+        public StudentController(IAddStudent student)
         {
-            _context = context;
+            _student = student;
         }
 
         public IActionResult Index()
         {
+            var t = TempData["Message"];
+            if (t != null)
+            {
+                ViewBag.Message = t;
+            }
             return View();
         }
 
@@ -31,17 +37,14 @@ namespace PracticalTest.Controllers
                 IDNumber = HttpContext.Request.Form["IDNumber"].ToString()
             };
 
-            if (smodel.FirstName != null && smodel.Surname != null)
-            {
-                _context.Add(smodel);
-                _context.SaveChanges();
-            }
-            else
-            {
-                return View("Index");
-            }
-            
-            return View("Index");
+            string result = _student.SaveStudent(smodel);
+            TempData["Message"] = result;
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Alert()
+        {
+            return RedirectToAction("Index");
         }
     }
 }

@@ -3,21 +3,34 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (ViewBag.Message != null)
+{
+    <form asp-controller="Home" asp-action="Alert">
+        <div class="alert alert-info" id="message" style="display:block">
+            Alert: @ViewBag.Message
+            <div class="bottom-left">
+                <button id="Ok" type="submit" class="btn btn-primary" onclick="closeMessage()">OK</button>
+            </div>
+        </div>
+    </form>
+}
+
 <div class="row">
     <div class="col-md-6">
-        <form asp-controller="Home" asp-action="SaveStudentCourse" method="post">
+        <form asp-controller="Home" asp-action="Index" method="post">
             <div class="form-group">
                 <h4>Register Student:</h4>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Student Name:</label>
-                        @*@Html.DropDownListFor(m => m.StudentId, new SelectList(Model.Students, "StudentId", "FirstName"), " -- Student Name -- ", new { @class = "form-control" })*@
+                        @Html.DropDownList("StudentId", new SelectList(Model.Students, "StudentId", "FullName"), " -- Student Name -- ", new { @class = "form-control" })
                     </div>
                     <div class="col-md-6">
                         <label>Course:</label>
-                        @*@Html.DropDownListFor(m => m.CourseId, new SelectList(Model.Courses, "CourseId", "CourseName")," -- Course Name -- ", new { @class = "form-control" })*@
+                        @Html.DropDownList("CourseId", new SelectList(Model.Courses, "CourseId", "CourseName"), " -- Course Name -- ", new { @class = "form-control" })
                     </div>
                 </div>
+                <br />
                 <div>
                     <button id="submit" type="submit" class="btn">Add Course</button>
                 </div>
@@ -25,63 +38,81 @@
         </form>
     </div>
     <div class="col-md-6">
-        <form asp-controller="Home" asp-action="Index">
-            <table id="studentDiv" class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            First Name
-                        </th>
-                        <th>
-                            Surname
-                        </th>
-                        <th>
-                            Course Name
-                        </th>
-                        <th>
-                            Start Date
-                        </th>
-                        <th>
-                            End Date
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.ViewData)
-                    {
+        <br />
+        <div>
+            <button id="Submit" type="submit" class="btn btn-primary" onclick="myFunction()">View Data</button>
+        </div>
+        <div id="studentDiv" style="visibility:hidden">
+            <form asp-controller="Home">
+                <table id="studentTable" class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                @item.FirstName
-                            </td>
-                            <td>
-                                @item.Surname
-                            </td>
-                            <td>
-                                @item.CourseName
-                            </td>
-                            <td>
-                                @item.StartDate
-                            </td>
-                            <td>
-                                @item.EndDate
-                            </td>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Surname
+                            </th>
+                            <th>
+                                Course Name
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-            <div>
-                <button id="Submit" type="submit" class="btn btn-primary" onclick="myFunction()">View Data</button>
-            </div>
-        </form>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ViewData)
+                        {
+                            <tr>
+                                <td>
+                                    @item.FirstName
+                                </td>
+                                <td>
+                                    @item.Surname
+                                </td>
+                                <td>
+                                    @item.CourseName
+                                </td>
+                                <td>
+                                    @item.StartDate
+                                </td>
+                                <td>
+                                    @item.EndDate
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
+<script src="//code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="paging.js"></script>
 <script>
+    $(document).ready(function () {
+        $('#studentTable').paging({ limit: 10 });
+    });
     function myFunction() {
         var x = document.getElementById("studentDiv");
         if (x.style.visibility === "hidden") {
             x.style.visibility = "visible";
         } else {
             x.style.visibility = "hidden";
+        }
+    }
+
+    function closeMessage() {
+        var x = document.getElementById("message");
+        if (x.style.display === "none") {
+            x.style.visibility = "block";
+        } else {
+            x.style.visibility = "block";
         }
     }
 </script>

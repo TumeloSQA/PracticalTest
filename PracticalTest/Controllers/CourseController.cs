@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PracticalTest.ClientModules;
 using PracticalTest.Models;
 
 namespace PracticalTest.Controllers
 {
     public class CourseController : Controller
     {
-        private readonly StudentCourseContext _context;
+        private readonly IAddCourse _course;
 
-        public CourseController(StudentCourseContext context)
+        public CourseController(IAddCourse course)
         {
-            _context = context;
+            _course = course;
         }
 
         public IActionResult Index()
         {
+            var t = TempData["Message"];
+            if (t != null)
+            {
+                ViewBag.Message = t;
+            }
             return View();
         }
 
@@ -30,17 +36,14 @@ namespace PracticalTest.Controllers
                 EndDate = DateTime.Parse(HttpContext.Request.Form["EndDate"].ToString())
             };
 
-            if(cmodel.CourseName != null && cmodel.StartDate < cmodel.EndDate)
-            {
-                _context.Add(cmodel);
-                _context.SaveChanges();
-            }
-            else
-            {
-                return View("Index");
-            }
-            
-            return View("Index");
+            string result = _course.SaveCourse(cmodel);
+            TempData["Message"] = result;
+            return RedirectToAction("Index");    
+        }
+
+        public IActionResult Alert()
+        {
+            return RedirectToAction("Index");
         }
     }
 }

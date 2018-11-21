@@ -13,6 +13,7 @@ namespace PracticalTest.Models
         public string EmailAddress { get; set; }
         public string IDNumber { get; set; }
 
+        public string FullName { get { return FirstName + " " + Surname; } }
         public ICollection<Student_CourseModel> Student_Courses { get; set; }
     }
 }

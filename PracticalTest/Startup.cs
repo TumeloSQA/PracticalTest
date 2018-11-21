@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PracticalTest.ClientModules;
+using PracticalTest.DAL;
 using PracticalTest.Models;
 
 namespace PracticalTest
@@ -37,6 +39,9 @@ namespace PracticalTest
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
+            services.AddScoped<IAddStudent, AddStudentRepository>();
+            services.AddScoped<IAddCourse, AddCourseRepository>();
+            services.AddScoped<IAddStudentCourse, AddStudentCourseRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

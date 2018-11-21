@@ -1,0 +1,47 @@
+﻿@model PracticalTest.Models.ViewModel
+
+<form asp-controller="Home" asp-action="GetListStudents">
+    <table id="studentDiv" class="table">
+        <thead>
+            <tr>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Surname
+                </th>
+                <th>
+                    Course Name
+                </th>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ViewData)
+            {
+                <tr>
+                    <td>
+                        @item.FirstName
+                    </td>
+                    <td>
+                        @item.Surname
+                    </td>
+                    <td>
+                        @item.CourseName
+                    </td>
+                    <td>
+                        @item.StartDate
+                    </td>
+                    <td>
+                        @item.EndDate
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
