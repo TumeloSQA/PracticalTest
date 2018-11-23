@@ -29,16 +29,24 @@ namespace PracticalTest.Controllers
 
         public IActionResult SaveCourse()
         {
-            CourseModel cmodel = new CourseModel
+            try
             {
-                CourseName = HttpContext.Request.Form["CourseName"].ToString(),
-                StartDate = DateTime.Parse(HttpContext.Request.Form["StartDate"].ToString()),
-                EndDate = DateTime.Parse(HttpContext.Request.Form["EndDate"].ToString())
-            };
-
-            string result = _course.SaveCourse(cmodel);
-            TempData["Message"] = result;
-            return RedirectToAction("Index");    
+                CourseModel cmodel = new CourseModel
+                {
+                    CourseName = HttpContext.Request.Form["CourseName"].ToString(),
+                    StartDate = DateTime.Parse(HttpContext.Request.Form["StartDate"].ToString()).Date,
+                    EndDate = DateTime.Parse(HttpContext.Request.Form["EndDate"].ToString()).Date
+                };
+                string res = _course.SaveCourse(cmodel);
+                TempData["Message"] = res;
+                return RedirectToAction("Index");
+            }
+            catch(FormatException)
+            {
+                string result = "Invalid Date. Please use 'yyyy-mm-dd' format";
+                TempData["Message"] = result;
+                return RedirectToAction("Index");
+            }    
         }
 
         public IActionResult Alert()
